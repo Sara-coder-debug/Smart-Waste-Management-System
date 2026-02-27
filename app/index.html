@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Smart Waste Monitoring System</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-dym/YkA0QhY8U5sB1ikgYyXSVK7gqKqvCq4UBxN4S6C+uCzjwM1l5X5OiKGuN+C1s/sE7zq0E2+u7VQ0C2r5w=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__left">
+      <div class="app-logo">
+        <i class="fas fa-trash-restore-alt"></i>
+      </div>
+      <div>
+        <h1 class="app-title">Smart Waste Monitoring System</h1>
+        <p class="app-subtitle">
+          Real-time waste bin monitoring with simulated NIR sensor data
+        </p>
+      </div>
+    </div>
+    <div class="app-header__right">
+      <span class="app-badge">
+        <i class="fas fa-broadcast-tower"></i>
+        Live Simulation
+      </span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="overview" aria-label="Bin summary and controls">
+      <div class="overview__stats">
+        <div class="overview-stat">
+          <span class="overview-stat__label">Average fill level</span>
+          <span class="overview-stat__value">
+            <span id="avg-fill">0</span>%
+          </span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat__label">Bins in alert</span>
+          <span class="overview-stat__value" id="alert-count">0</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat__label">Highest NIR value</span>
+          <span class="overview-stat__value">
+            <span id="max-nir">0</span> nm
+          </span>
+        </div>
+      </div>
+      <div class="overview__controls">
+        <button type="button" class="btn btn--secondary" id="manual-refresh">
+          <i class="fas fa-sync-alt"></i>
+          Refresh now
+        </button>
+        <button type="button" class="btn btn--primary" id="toggle-auto">
+          <i class="fas fa-pause-circle"></i>
+          Pause auto-refresh
+        </button>
+      </div>
+    </section>
+
+    <section
+      class="dashboard"
+      aria-label="Waste bin status dashboard"
+    >
+      <div class="bin-grid">
+        <!-- Bin Card 1 -->
+        <article
+          class="bin-card"
+          data-bin-index="0"
+          aria-label="Bin #1 status"
+        >
+          <header class="bin-card__header">
+            <div>
+              <div class="bin-card__id">Bin #1</div>
+              <div class="bin-card__type">
+                <i class="fas fa-recycle"></i>
+                <span class="type-text">Plastic</span>
+              </div>
+            </div>
+            <span
+              class="bin-card__status badge badge--normal"
+              aria-live="polite"
+            >
+              <i class="fas fa-check-circle"></i>
+              <span class="status-text">Normal</span>
+            </span>
+          </header>
+
+          <div class="bin-card__body">
+            <div class="bin-metric">
+              <span class="metric-label">NIR Value</span>
+              <span class="metric-value">
+                <span class="nir-value">0</span> nm
+              </span>
+            </div>
+
+            <div class="bin-metric">
+              <span class="metric-label">Fill Level</span>
+              <span class="metric-value">
+                <span class="fill-level-text">0</span>%
+              </span>
+            </div>
+
+            <div class="progress" aria-hidden="true">
+              <div class="progress__track">
+                <div
+                  class="progress__bar progress__bar--normal"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bin Card 2 -->
+        <article
+          class="bin-card"
+          data-bin-index="1"
+          aria-label="Bin #2 status"
+        >
+          <header class="bin-card__header">
+            <div>
+              <div class="bin-card__id">Bin #2</div>
+              <div class="bin-card__type">
+                <i class="fas fa-scroll"></i>
+                <span class="type-text">Paper</span>
+              </div>
+            </div>
+            <span
+              class="bin-card__status badge badge--normal"
+              aria-live="polite"
+            >
+              <i class="fas fa-check-circle"></i>
+              <span class="status-text">Normal</span>
+            </span>
+          </header>
+
+          <div class="bin-card__body">
+            <div class="bin-metric">
+              <span class="metric-label">NIR Value</span>
+              <span class="metric-value">
+                <span class="nir-value">0</span> nm
+              </span>
+            </div>
+
+            <div class="bin-metric">
+              <span class="metric-label">Fill Level</span>
+              <span class="metric-value">
+                <span class="fill-level-text">0</span>%
+              </span>
+            </div>
+
+            <div class="progress" aria-hidden="true">
+              <div class="progress__track">
+                <div
+                  class="progress__bar progress__bar--normal"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bin Card 3 -->
+        <article
+          class="bin-card"
+          data-bin-index="2"
+          aria-label="Bin #3 status"
+        >
+          <header class="bin-card__header">
+            <div>
+              <div class="bin-card__id">Bin #3</div>
+              <div class="bin-card__type">
+                <i class="fas fa-leaf"></i>
+                <span class="type-text">Organic</span>
+              </div>
+            </div>
+            <span
+              class="bin-card__status badge badge--normal"
+              aria-live="polite"
+            >
+              <i class="fas fa-check-circle"></i>
+              <span class="status-text">Normal</span>
+            </span>
+          </header>
+
+          <div class="bin-card__body">
+            <div class="bin-metric">
+              <span class="metric-label">NIR Value</span>
+              <span class="metric-value">
+                <span class="nir-value">0</span> nm
+              </span>
+            </div>
+
+            <div class="bin-metric">
+              <span class="metric-label">Fill Level</span>
+              <span class="metric-value">
+                <span class="fill-level-text">0</span>%
+              </span>
+            </div>
+
+            <div class="progress" aria-hidden="true">
+              <div class="progress__track">
+                <div
+                  class="progress__bar progress__bar--normal"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="insights" aria-label="Smart waste insights">
+      <h2 class="section-title">Smart insights for this cycle</h2>
+      <div class="insights-grid">
+        <article class="insight-card insight-card--score">
+          <div class="insight-card__header">
+            <span class="insight-label">Eco score</span>
+            <i class="fas fa-leaf"></i>
+          </div>
+          <div class="insight-card__body">
+            <div class="eco-score-circle">
+              <span id="eco-score">0</span>
+            </div>
+            <p class="insight-text">
+              Higher score means fewer bins are close to full.
+            </p>
+          </div>
+        </article>
+
+        <article class="insight-card insight-card--route">
+          <div class="insight-card__header">
+            <span class="insight-label">Collection hint</span>
+            <i class="fas fa-truck"></i>
+          </div>
+          <div class="insight-card__body">
+            <p id="collection-hint" class="insight-text">
+              Waiting for first data cycle&hellip;
+            </p>
+          </div>
+        </article>
+
+        <article class="insight-card insight-card--tip">
+          <div class="insight-card__header">
+            <span class="insight-label">Recycling tip</span>
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="insight-card__body">
+            <p id="recycling-tip" class="insight-text">
+              Keep an eye on the live data to get a personalized recycling tip.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p id="last-updated">Last updated: --</p>
+  </footer>
+
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
+</body>
+</html>
